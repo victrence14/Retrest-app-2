@@ -1,45 +1,57 @@
 import { Link } from "expo-router";
-import { styled } from "nativewind";
-import { Text } from "react-native";
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-
-const SafeAreaView = styled(RNSafeAreaView);
+import { Pressable, StyleSheet, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   return (
-    <SafeAreaView className="flex-1 items-center justify-center bg-white">
-      <Text className="text-xl font-bold text-blue-500">
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>
         Welcome to Retrest
       </Text>
-      <Link
-        href="/onboarding"
-        className="mt-4 rounded bg-prirmary text-white p-4"
-      >
-        {" "}
-        Go to Onboarding{" "}
+      <Link href="/onboarding" asChild>
+        <Pressable style={styles.button}>
+          <Text style={styles.buttonText}>Go to Onboarding</Text>
+        </Pressable>
       </Link>
-      <Link
-        href="/(auth)/sign-in"
-        className="mt-4 rounded bg-prirmary text-white p-4"
-      >
-        {" "}
-        Go to Sign In{" "}
+      <Link href="/(auth)/sign-in" asChild>
+        <Pressable style={styles.button}>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </Pressable>
       </Link>
-      <Link
-        href="/(auth)/sign-up"
-        className="mt-4 rounded bg-prirmary text-white p-4"
-      >
-        {" "}
-        Go to Sign Up{" "}
-      </Link>
-      <Link
-        href={{
-          pathname: "/subscription.tsx/[id]",
-          params: { id: "claude" },
-        }}
-      >
-        Claude Max Subscription
+      <Link href="/(auth)/sign-up" asChild>
+        <Pressable style={styles.button}>
+          <Text style={styles.buttonText}>Create Account</Text>
+        </Pressable>
       </Link>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 16,
+    backgroundColor: "#fff9e3",
+    padding: 24,
+  },
+  title: {
+    color: "#081126",
+    fontFamily: "sans-bold",
+    fontSize: 24,
+  },
+  button: {
+    minWidth: 220,
+    alignItems: "center",
+    borderRadius: 12,
+    backgroundColor: "#081126",
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+  },
+  buttonText: {
+    color: "#ffffff",
+    fontFamily: "sans-bold",
+    fontSize: 16,
+  },
+});

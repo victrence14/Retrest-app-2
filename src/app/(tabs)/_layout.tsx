@@ -1,6 +1,5 @@
-import { clsx } from "clsx";
 import { Tabs } from "expo-router";
-import { Image, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { tabs } from "../../../constants/data";
 import { colors, components } from "../../../constants/theme";
@@ -12,9 +11,9 @@ const TabLayout = () => {
 
   const TabIcon = ({ focused, icon }: TabIconProps) => {
     return (
-      <View className="tabs-icon">
-        <View className={clsx("tabs-pill", focused && "tabs-active")}>
-          <Image source={icon} resizeMode="contain" className="tabs-glyph" />
+      <View style={styles.iconFrame}>
+        <View style={[styles.iconPill, focused && styles.iconPillActive]}>
+          <Image source={icon} resizeMode="contain" style={styles.icon} />
         </View>
       </View>
     );
@@ -27,21 +26,26 @@ const TabLayout = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           position: "absolute",
+          left: tabBar.horizontalInset,
+          right: tabBar.horizontalInset,
           bottom: Math.max(insets.bottom, tabBar.horizontalInset),
           height: tabBar.height,
-          marginHorizontal: tabBar.horizontalInset,
           borderRadius: tabBar.radius,
           backgroundColor: colors.background,
-          borderTopWidth: 0,
-          elevation: 0,
+          borderTopWidth: 1,
+          borderColor: colors.border,
+          elevation: 8,
+          zIndex: 10,
         },
         tabBarItemStyle: {
-          paddingVertical: tabBar.height / 2 - tabBar.iconFrame / 1.6,
+          alignItems: "center",
+          justifyContent: "center",
         },
         tabBarIconStyle: {
           width: tabBar.iconFrame,
           height: tabBar.iconFrame,
           alignItems: "center",
+          justifyContent: "center",
         },
       }}
     >
@@ -62,3 +66,26 @@ const TabLayout = () => {
 };
 
 export default TabLayout;
+
+const styles = StyleSheet.create({
+  iconFrame: {
+    width: 48,
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconPill: {
+    width: 48,
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 24,
+  },
+  iconPillActive: {
+    backgroundColor: colors.accent,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+  },
+});
